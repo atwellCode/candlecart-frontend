@@ -1,18 +1,21 @@
-import React from 'react'
-import Navbar from './components/Navbar'
+import React from "react";
+import Navbar from "./components/Navbar";
+import Home from "./pages/Home";
+import { Route, Routes, useLocation } from "react-router-dom";
 
 const App = () => {
+  const adminPath = useLocation().pathname.includes("admin");
   return (
     <>
-    <Navbar/>
-      <h1 class="text-3xl text-amber-400 font-bold underline">
-    Hello world!
-  </h1>
-  <h1 class="text-3xl text-amber-400 font-bold underline">
-    Hello world!
-  </h1>
-    </>
-  )
-}
 
-export default App
+      {adminPath ? null : <Navbar />}
+      <div className={`${adminPath ? "" : "px-6 md:px-16 lg:px-24 xl:px-32"}`}> 
+        <Routes>
+          <Route path="/" element={<Home />} />
+        </Routes>
+      </div>
+    </>
+  );
+};
+
+export default App;

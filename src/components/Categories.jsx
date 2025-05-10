@@ -1,6 +1,6 @@
 import React from 'react'
 
-const MainBsnner = () => {
+const Categories = () => {
   return (
     <div>
       
@@ -8,4 +8,4 @@ const MainBsnner = () => {
   )
 }
 
-export default MainBsnner
+export default Categories
