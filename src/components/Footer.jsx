@@ -31,18 +31,19 @@ const Footer = () => {
           ))}
         </div>
       </div>
-      <p className="py-4 text-center text-sm md:text-base text-gray-500/80">
-        <div className="container mx-auto px-4">
-          <p className="text-sm md:text-base">
-            &copy; {new Date().getFullYear()}{" "}
-            <span className="font-semibold"> Candle Cart</span>. All rights reserved.
-          </p>
-          <p className="text-xs md:text-sm mt-1">
-            Designed & Developed with <span className="text-red-500">❤️</span>{" "}
-            by <span className="font-medium">Arslan</span>
-          </p>
-        </div>
-      </p>
+      <div className="py-4 text-center text-sm md:text-base text-gray-500/80">
+  <div className="container mx-auto px-4">
+    <p className="text-sm md:text-base">
+      &copy; {new Date().getFullYear()}{" "}
+      <span className="font-semibold">Candle Cart</span>. All rights reserved.
+    </p>
+    <p className="text-xs md:text-sm mt-1">
+      Designed & Developed with <span className="text-red-500">❤️</span> by{" "}
+      <span className="font-medium">Arslan</span>
+    </p>
+  </div>
+</div>
+
     </div>
   );
 };

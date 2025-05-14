@@ -6,7 +6,7 @@ const ProductCard = ({ product }) => {
   const {
     currency,
     addToCart,
-    updateCartItem,
+    // updateCartItem,
     removeFromCart,
     cartItems,
     navigate,
@@ -14,7 +14,15 @@ const ProductCard = ({ product }) => {
 
   return (
     product && (
-      <div className="border border-gray-500/20 rounded-md md:px-4 px-3 py-2 bg-white min-w-56 max-w-56 w-full">
+      <div
+        onClick={() => {
+          navigate(
+            `/products/${product.category.toLowerCase()}/${product._id}`
+          );
+          scrollTo(0, 0);
+        }}
+        className="border border-gray-500/20 rounded-md px-3 py-2 bg-white w-full max-w-[230px] mx-auto hover:shadow-lg transition-shadow duration-300"
+      >
         <div className="group cursor-pointer flex items-center justify-center px-2">
           <img
             className="group-hover:scale-105 transition max-w-26 md:max-w-36"
@@ -24,9 +32,10 @@ const ProductCard = ({ product }) => {
         </div>
         <div className="text-gray-500/60 text-sm">
           <p>{product.category}</p>
-          <p className="text-gray-700 font-medium text-lg truncate w-full">
+          <p className="text-gray-700 font-medium text-base md:text-sm truncate w-full">
             {product.name}
           </p>
+
           <div className="flex items-center gap-0.5">
             {Array(5)
               .fill("")
@@ -46,7 +55,12 @@ const ProductCard = ({ product }) => {
                 {currency} {product.price}
               </span>
             </p>
-            <div onClick={(e) =>{e.stopPropagation();}} className="text-primary">
+            <div
+              onClick={(e) => {
+                e.stopPropagation();
+              }}
+              className="text-primary"
+            >
               {!cartItems[product._id] ? (
                 <button
                   className="flex items-center justify-center gap-1 bg-primary/10 border border-primary md:w-[80px] w-[64px] h-[34px] rounded cursor-pointer"

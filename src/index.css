@@ -6,6 +6,6 @@
     font-family: "DM Sans", sans-serif;
 }
 @theme{
-    --color-primary: #ff6f00;        /* Neon Orange */
-    --color-primary-dull: #ffaa33;   /* Soft Amber */
+    --color-primary: #4fbf8b;        /* Neon Orange */
+    --color-primary-dull: #44ae7c;   /* Soft Amber */
 }
