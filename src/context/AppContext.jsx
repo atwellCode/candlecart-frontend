@@ -57,6 +57,26 @@ const AppContextProvider = ({ children }) => {
     fetchProducts();
   }, []);
 
+  // Total cart item Count
+
+  const getCartCount = () => {
+    let totalCount= 0;
+    for (const item in cartItems){
+      totalCount += cartItems[item]
+    }
+    return totalCount;
+  }
+  const getCartAmount = ()=>{
+    let totalAmount = 0; 
+    for(const items in cartItems){
+      let itemInfo = products.find((product) => product._id === items);
+      if(cartItems[items]> 0){
+        totalAmount += itemInfo.offerPrice * cartItems[items]
+      }
+    }
+    return Math.floor(totalAmount*100) /100;
+  }
+
   const value = {
     navigate,
     user,
@@ -72,7 +92,9 @@ const AppContextProvider = ({ children }) => {
     removeFromCart,
     cartItems,
     searchQuery,
-    setSearchQuery
+    setSearchQuery,
+    getCartAmount,
+    getCartCount
   };
 
   return <AppContext.Provider value={value}>{children}</AppContext.Provider>;

@@ -6,7 +6,7 @@ import { useAppContext } from "../context/AppContext";
 const Navbar = () => {
   const navigate = useNavigate();
   const [open, setOpen] = React.useState(false);
-  const { user, setUser, setShowUserLogin,searchQuery , setSearchQuery } = useAppContext();
+  const { user, setUser, setShowUserLogin,searchQuery , setSearchQuery, getCartCount, getCartAmount } = useAppContext();
   const logout = async () => {
     setUser(null);
     navigate("/");
@@ -54,7 +54,7 @@ const Navbar = () => {
             onClick={() => navigate('/cart')}
             alt="card-icon" className="w-6" />
             <button className="absolute -top-2 -right-3 text-xs text-white bg-primary w-[18px] h-[18px] rounded-full">
-              3
+              {getCartCount()}
             </button>
           </div>
 
