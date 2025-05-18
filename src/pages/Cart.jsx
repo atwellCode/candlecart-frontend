@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { assets } from "../assets/assets";
+import { assets, dummyAddress } from "../assets/assets";
 import { useAppContext } from "../context/AppContext";
 
 const Cart = () => {
@@ -14,6 +14,9 @@ const Cart = () => {
     getCartAmount,
     getCartCount} = useAppContext();
 const [cartArray, setCartArray] = useState([]);
+const [addresses, setAddresses] = useState(dummyAddress);
+const [showAddress, setShowAddress] = useState([]);
+
 
   return (
     <div className="flex flex-col md:flex-row py-16 max-w-6xl w-full px-6 mx-auto gap-12">
