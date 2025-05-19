@@ -4,7 +4,8 @@ import { useAppContext } from "../context/AppContext";
 
 const Cart = () => {
   const [showAddress, setShowAddress] = useState(false);
-  const {navigate,
+  const {
+    navigate,
     products,
     currency,
     addToCart,
@@ -12,11 +13,12 @@ const Cart = () => {
     removeFromCart,
     cartItems,
     getCartAmount,
-    getCartCount} = useAppContext();
-const [cartArray, setCartArray] = useState([]);
-const [addresses, setAddresses] = useState(dummyAddress);
-const [showAddress, setShowAddress] = useState([]);
-
+    getCartCount,
+  } = useAppContext();
+  const [cartArray, setCartArray] = useState([]);
+  const [addresses, setAddresses] = useState(dummyAddress);
+  const [showAddress, setShowAddress] = useState(false);
+  const [selectedAddress, setSelectedAddress] = useState(dummyAddress[0]);
 
   return (
     <div className="flex flex-col md:flex-row py-16 max-w-6xl w-full px-6 mx-auto gap-12">
@@ -24,7 +26,9 @@ const [showAddress, setShowAddress] = useState([]);
       <div className="flex-1 max-w-4xl">
         <h1 className="text-3xl font-semibold mb-6">
           Shopping Cart{" "}
-          <span className="text-sm text-primary ml-2">({products.length} Items)</span>
+          <span className="text-sm text-primary ml-2">
+            ({products.length} Items)
+          </span>
         </h1>
 
         <div className="grid grid-cols-[2fr_1fr_1fr] text-gray-500 text-base font-medium pb-3 border-b border-gray-300">
@@ -79,7 +83,11 @@ const [showAddress, setShowAddress] = useState([]);
         ))}
 
         <button className="group cursor-pointer py-3 px-6 flex items-center gap-2 text-primary font-medium mt-8 hover:bg-primary/10 transition">
-          <img className="w-4 md:w-5" src={assets.arrow_right_icon_colored} alt="Arrow icon" />
+          <img
+            className="w-4 md:w-5"
+            src={assets.arrow_right_icon_colored}
+            alt="Arrow icon"
+          />
           Continue Shopping
         </button>
       </div>
