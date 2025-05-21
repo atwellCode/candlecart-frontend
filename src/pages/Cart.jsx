@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { assets, dummyAddress } from "../assets/assets";
 import { useAppContext } from "../context/AppContext";
 
@@ -19,15 +19,32 @@ const Cart = () => {
   const [addresses, setAddresses] = useState(dummyAddress);
   const [showAddress, setShowAddress] = useState(false);
   const [selectedAddress, setSelectedAddress] = useState(dummyAddress[0]);
+  const [paymentOption, setPaymentOption] = useState("COD")  ;
 
-  return (
-    <div className="flex flex-col md:flex-row py-16 max-w-6xl w-full px-6 mx-auto gap-12">
+  const getCart = () => {
+    let tempArray = [];
+    for(const key in cartItems){
+      const product =products.find((item)=> item._id === key)
+      product.quantity=cartItems[key]
+      tempArray.push(product)
+    }
+    setCartArray(tempArray)
+  }
+
+  useEffect(()={
+  if(products.length > 0 && cartItems){
+  getCart()
+  }
+  },[products,cartItems])
+
+  return products.length > 0 && cartItems ? (
+    <div className="flex flex-col md:flex-row mt-16">
       {/* Cart Items */}
       <div className="flex-1 max-w-4xl">
         <h1 className="text-3xl font-semibold mb-6">
           Shopping Cart{" "}
           <span className="text-sm text-primary ml-2">
-            ({products.length} Items)
+           {getCartCount()} Items
           </span>
         </h1>
 
@@ -37,26 +54,31 @@ const Cart = () => {
           <p className="text-center">Action</p>
         </div>
 
-        {products.map((product, index) => (
+        {cartArray.map((product, index) => (
           <div
             key={index}
             className="grid grid-cols-[2fr_1fr_1fr] items-center text-sm md:text-base font-medium pt-4 border-b border-gray-200 pb-4"
           >
             <div className="flex items-center gap-4 md:gap-6 ">
-              <div className="w-24 h-24 flex items-center justify-center border border-gray-300 rounded overflow-hidden ">
+              <div onClick={ () => {
+
+                navigate(`/products/${product.category.toLowerCase()}/${product._id}`)
+                scrollTo(0,0)
+              }
+              } className="cursor-pointer w-24 h-24 flex items-center justify-center border border-gray-300 rounded overflow-hidden ">
                 <img
                   className="object-cover w-full h-full"
-                  src={product.image}
+                  src={product.image[0]}
                   alt={product.name}
                 />
               </div>
               <div>
                 <p className="font-semibold text-black mb-1">{product.name}</p>
-                <p className="text-gray-500 text-sm">Size: {product.size}</p>
+                <p className="text-gray-500 text-sm">Weight: {product.weight || "N/A"}</p>
                 <div className="flex items-center text-sm gap-2">
                   <span>Qty:</span>
                   <select className="border border-gray-300 rounded px-2 py-1 outline-none">
-                    {Array.from({ length: 5 }).map((_, i) => (
+                    {Array(cartItems[product._id] > 9 ? cartItems[product._id] : 9).fill({ ''}).map((_, i) => (
                       <option key={i} value={i + 1}>
                         {i + 1}
                       </option>
@@ -67,11 +89,13 @@ const Cart = () => {
             </div>
 
             <p className="text-center font-semibold text-gray-700">
-              ${product.offerPrice * product.quantity}
+              {currency}{product.offerPrice * product.quantity}
             </p>
 
             <div className="flex justify-center">
-              <button className="hover:text-red-500 transition">
+              <button onClick={() => {
+                removeFromCart()
+              }} className="hover:text-red-500 transition">
                 <img
                   className="w-4 md:w-5"
                   src={assets.remove_icon}
@@ -82,7 +106,12 @@ const Cart = () => {
           </div>
         ))}
 
-        <button className="group cursor-pointer py-3 px-6 flex items-center gap-2 text-primary font-medium mt-8 hover:bg-primary/10 transition">
+        <button 
+        onClick={() =>{
+          navigate('/products');
+          scrollTo(0,0)
+        }}
+        className="group cursor-pointer py-3 px-6 flex items-center gap-2 text-primary font-medium mt-8 hover:bg-primary/10 transition">
           <img
             className="w-4 md:w-5"
             src={assets.arrow_right_icon_colored}
@@ -100,7 +129,7 @@ const Cart = () => {
         <div className="mb-6">
           <p className="text-sm font-medium uppercase">Delivery Address</p>
           <div className="relative mt-2 flex justify-between items-start">
-            <p className="text-gray-500 text-sm">No address found</p>
+            <p className="text-gray-500 text-sm">{selectedAddress}No address found</p>
             <button
               onClick={() => setShowAddress(!showAddress)}
               className="text-primary hover:underline text-sm"
@@ -159,7 +188,7 @@ const Cart = () => {
         </button>
       </div>
     </div>
-  );
+  ) : null
 };
 
 export default Cart;
